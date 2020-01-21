@@ -1,8 +1,0 @@
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\bin\Debug\netstandard2.0\OnlineRoulette.Domain.deps.json
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\bin\Debug\netstandard2.0\OnlineRoulette.Domain.dll
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\bin\Debug\netstandard2.0\OnlineRoulette.Domain.pdb
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\obj\Debug\netstandard2.0\OnlineRoulette.Domain.AssemblyInfoInputs.cache
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\obj\Debug\netstandard2.0\OnlineRoulette.Domain.AssemblyInfo.cs
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\obj\Debug\netstandard2.0\OnlineRoulette.Domain.dll
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\obj\Debug\netstandard2.0\OnlineRoulette.Domain.pdb
-C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Domain\obj\Debug\netstandard2.0\OnlineRoulette.Domain.csprojAssemblyReference.cache
