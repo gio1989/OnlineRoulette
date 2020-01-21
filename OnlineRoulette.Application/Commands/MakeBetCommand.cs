@@ -1,14 +1,14 @@
 ﻿using MediatR;
-using OnlineRoulette.Domain.Entities;
+using OnlineRoulette.Application.Common.Dtos;
 
 namespace OnlineRoulette.Application.Commands
 {
     /// <summary>
     /// To create a bet 
     /// </summary>
-    public class MakeBetCommand : IRequest<BetEntity>
+    public class MakeBetCommand : IRequest<BetDto>
     {
-        
+
         /// <summary>
         /// BetString  in json format
         /// </summary>

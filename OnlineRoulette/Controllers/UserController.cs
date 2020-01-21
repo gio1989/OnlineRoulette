@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.SignalR;
 using OnlineRoulette.Api.Controllers;
 using OnlineRoulette.Api.SignalrHubs;
 using OnlineRoulette.Application.Commands;
+using OnlineRoulette.Application.Common.Dtos;
 using OnlineRoulette.Application.Queries;
 using OnlineRoulette.Domain.Entities;
-using System;
 using System.Threading.Tasks;
 
 namespace OnlineRoulette.Controllers
@@ -33,8 +33,7 @@ namespace OnlineRoulette.Controllers
         [AllowAnonymous]
         [HttpPost("createSpin")]
         public async Task<ActionResult<long>> CreateSpin()
-        => await Mediator.Send(new CreateSpinCommand());
-
+            => await Mediator.Send(new CreateSpinCommand());
 
         /// <summary>
         /// Make new bet
@@ -42,8 +41,11 @@ namespace OnlineRoulette.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost("makeBet")]
-        public async Task<ActionResult<BetEntity>> MakeBet(MakeBetCommand command)
-            => await Mediator.Send(command);
+        public async Task<ActionResult<BetDto>> MakeBet(MakeBetCommand command)
+        {
+            await _hubContext.Clients.All.SendAsync("jackpotAmountChanged", $"Jackpot amount has increased: {await Mediator.Send(new JackpotQuery())}");
+            return await Mediator.Send(command);
+        }
 
         #endregion
 
@@ -78,11 +80,6 @@ namespace OnlineRoulette.Controllers
         public async Task<ActionResult<PagedData<BetEntity>>> GetBetHistory(BetHistoryQuery query)
             => await Mediator.Send(query);
 
-
-        public async Task SendJakpotAmountChangedNotification()
-        {
-            await _hubContext.Clients.All.SendAsync("Notify", $"Home page loaded at: {DateTime.Now}");
-        }
         #endregion
 
     }

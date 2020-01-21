@@ -1,6 +1,7 @@
 ﻿using ge.singular.roulette;
 using MediatR;
 using OnlineRoulette.Application.Commands;
+using OnlineRoulette.Application.Common.Dtos;
 using OnlineRoulette.Application.Common.Exceptions;
 using OnlineRoulette.Application.Common.Interfaces;
 using OnlineRoulette.Domain.Entities;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace OnlineRoulette.Application.CommandHandlers
 {
-    public class CommandHandler : IRequestHandler<MakeBetCommand, BetEntity>,
-                                  IRequestHandler<CreateSpinCommand, long>
+    public class CommandHandler : IRequestHandler<MakeBetCommand, BetDto>,
+                                  IRequestHandler<CreateSpinCommand, long>,
+                                  IRequestHandler<SpinStatusChangeCommand>
     {
         private readonly ICommandRepository _commandRepository;
         private readonly IQueryRepository _queryRepository;
@@ -26,12 +28,12 @@ namespace OnlineRoulette.Application.CommandHandlers
             _currentUserService = currentUserService;
         }
 
-        public async Task<BetEntity> Handle(MakeBetCommand request, CancellationToken cancellationToken)
+        public async Task<BetDto> Handle(MakeBetCommand request, CancellationToken cancellationToken)
         {
             var user = await _queryRepository.FindUserById(_currentUserService.CurrentUserId)
                ?? throw new UserNotFoundException();
 
-          string betString=  Convert.ToString(request.BetString);
+            string betString = Convert.ToString(request.BetString);
 
             CheckBet(betString, request.BetAmount, user.Balance);
 
@@ -60,11 +62,18 @@ namespace OnlineRoulette.Application.CommandHandlers
             };
             await _commandRepository.MakeBet(bet, user.Balance, winningNumber);
 
-            return new BetEntity { Id = bet.Id, BetAmount = bet.BetAmount, CreatedAt = bet.CreatedAt };
+            return new BetDto { SpinId = bet.SpinId, BetStatus = bet.BetStatus, WonAmount = bet.WonAmount, WinningNumber = winningNumber };
         }
 
         public async Task<long> Handle(CreateSpinCommand request, CancellationToken cancellationToken)
-            => await _commandRepository.CreateSpin(new SpinEntity { SpinStatus = SpinStatus.started });
+            => await _commandRepository.CreateSpin(new SpinEntity { SpinStatus = SpinStatus.Created });
+
+        public async Task<Unit> Handle(SpinStatusChangeCommand request, CancellationToken cancellationToken)
+        {
+            await _commandRepository.ChangeSpinStatus(request.SpinId, request.SpinStatus);
+
+            return Unit.Value;
+        }
 
         #region Private Methods
 

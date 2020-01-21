@@ -26,7 +26,7 @@ namespace OnlineRoulette.Infrastructure.Repositories
                 db.Open();
                 db.BeginTransaction();
 
-                await UpdateSpin(bet.SpinId, winningNumber, SpinStatus.Closed, db);
+                await UpdateSpin(bet.SpinId, winningNumber, db);
 
                 await UpdateBalance(bet.UserId, balance, db);
 
@@ -36,7 +36,7 @@ namespace OnlineRoulette.Infrastructure.Repositories
 
                 db.CommitTransaction();
             }
-            catch (Exception ex)
+            catch
             {
                 db.RollBackTransaction();
             }
@@ -73,6 +73,36 @@ namespace OnlineRoulette.Infrastructure.Repositories
             return insertedId;
         }
 
+        /// <summary>
+        /// Change spin Status 
+        /// </summary>
+        /// <param name="spinId"></param>
+        /// <param name="spinStatus"></param>
+        /// <returns></returns>
+        public async Task ChangeSpinStatus(int spinId, SpinStatus spinStatus)
+        {
+
+            using (var db = _dbProvider.GetDBInstance())
+            {
+                db.Open();
+
+                var changeSpinStatusSqlCmd = @"update spins
+                                            set UpdatedAt=@UpdatedAt,
+                                            SpinStatus=@SpinStatus
+                                            where id=@Id";
+
+                await db.ExecuteAsync(changeSpinStatusSqlCmd, new
+                {
+                    UpdatedAt = DateTime.Now,
+                    SpinStatus = (byte)spinStatus,
+                    id = spinId
+                });
+
+                db.Close();
+            }
+        }
+
+
         public async Task<SpinEntity> SpinById(int id)
         {
             using (var db = _dbProvider.GetDBInstance())
@@ -88,19 +118,17 @@ namespace OnlineRoulette.Infrastructure.Repositories
 
         #region Private Methods
 
-        private async Task UpdateSpin(int spinId, int winningNumber, SpinStatus spinStatus, Database db)
+        private async Task UpdateSpin(int spinId, int winningNumber, Database db)
         {
             var updateSpinSqlCmd = @" update spins
                                             set UpdatedAt=@UpdatedAt,
-                                            WinningNumber=@WinningNumber,
-                                            SpinStatus=@SpinStatus
+                                            WinningNumber=@WinningNumber
                                             where id=@Id";
 
             await db.ExecuteAsync(updateSpinSqlCmd, new
             {
                 UpdatedAt = DateTime.Now,
                 winningNumber,
-                SpinStatus = (byte)spinStatus,
                 id = spinId
             });
         }

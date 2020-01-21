@@ -5,7 +5,7 @@
         /// <summary>
         /// when betting started
         /// </summary>
-        started = 1,
+        Created = 1,
 
         /// <summary>
         /// when betting closed
