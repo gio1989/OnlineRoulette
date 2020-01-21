@@ -1,0 +1,11 @@
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\bin\Debug\netstandard2.0\OnlineRoulette.Application.deps.json
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\bin\Debug\netstandard2.0\OnlineRoulette.Application.dll
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\bin\Debug\netstandard2.0\OnlineRoulette.Application.pdb
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.AssemblyInfoInputs.cache
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.AssemblyInfo.cs
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.dll
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.pdb
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.csprojAssemblyReference.cache
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\bin\Debug\netstandard2.0\OnlineRoulette.Common.dll
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\bin\Debug\netstandard2.0\OnlineRoulette.Common.pdb
+C:\Users\giorg\source\repos\OnlineRoulette\OnlineRoulette.Application\obj\Debug\netstandard2.0\OnlineRoulette.Application.csproj.CopyComplete
