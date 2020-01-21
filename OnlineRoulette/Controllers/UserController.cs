@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using OnlineRoulette.Api.Controllers;
+using OnlineRoulette.Api.SignalrHubs;
 using OnlineRoulette.Application.Commands;
 using OnlineRoulette.Application.Queries;
 using OnlineRoulette.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace OnlineRoulette.Controllers
@@ -13,6 +16,13 @@ namespace OnlineRoulette.Controllers
     [Route("api/" + nameof(Startup.v1) + "/[controller]")]
     public class UserController : ApiController
     {
+        private readonly IHubContext<JackpotNotificationHub> _hubContext;
+
+        public UserController(IHubContext<JackpotNotificationHub> hubContext)
+        {
+            _hubContext = hubContext;
+        }
+
         #region Commands
 
         /// <summary>
@@ -23,12 +33,8 @@ namespace OnlineRoulette.Controllers
         [AllowAnonymous]
         [HttpPost("createSpin")]
         public async Task<ActionResult<long>> CreateSpin()
-            => await Mediator.Send(new CreateSpinCommand());
+        => await Mediator.Send(new CreateSpinCommand());
 
-        [AllowAnonymous]
-        [HttpPost("closeSpin")]
-        public async Task<ActionResult<long>> CloseSpin()
-           => await Mediator.Send(new CreateSpinCommand()); 
 
         /// <summary>
         /// Make new bet
@@ -44,7 +50,9 @@ namespace OnlineRoulette.Controllers
         #region Queries
 
         /// <summary>
-        /// Login to the system
+        /// Login to the system. 
+        /// email: test@test.net
+        /// pwd: test
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
@@ -70,6 +78,11 @@ namespace OnlineRoulette.Controllers
         public async Task<ActionResult<PagedData<BetEntity>>> GetBetHistory(BetHistoryQuery query)
             => await Mediator.Send(query);
 
+
+        public async Task SendJakpotAmountChangedNotification()
+        {
+            await _hubContext.Clients.All.SendAsync("Notify", $"Home page loaded at: {DateTime.Now}");
+        }
         #endregion
 
     }

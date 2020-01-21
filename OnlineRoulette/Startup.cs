@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OnlineRoulette.Api.Filters;
 using OnlineRoulette.Api.Services;
+using OnlineRoulette.Api.SignalrHubs;
 using OnlineRoulette.Application;
 using OnlineRoulette.Application.Common.Interfaces;
 using OnlineRoulette.Domain;
@@ -40,6 +41,8 @@ namespace OnlineRoulette
             services.AddInfrastructure(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            services.AddSignalR();
 
             // Configure jwt authentication
             services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
@@ -117,6 +120,7 @@ namespace OnlineRoulette
             {
                 app.UseDeveloperExceptionPage();
             }
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -138,8 +142,11 @@ namespace OnlineRoulette
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<JackpotNotificationHub>("/Path goes here");
+
                 endpoints.MapControllers();
             });
         }

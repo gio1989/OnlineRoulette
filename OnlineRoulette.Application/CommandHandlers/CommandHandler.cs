@@ -31,7 +31,7 @@ namespace OnlineRoulette.Application.CommandHandlers
             var user = await _queryRepository.FindUserById(_currentUserService.CurrentUserId)
                ?? throw new UserNotFoundException();
 
-            string betString = Convert.ToString(request.BetString);
+          string betString=  Convert.ToString(request.BetString);
 
             CheckBet(betString, request.BetAmount, user.Balance);
 
@@ -48,7 +48,7 @@ namespace OnlineRoulette.Application.CommandHandlers
 
             var bet = new BetEntity
             {
-                SpinId=request.SpinId,
+                SpinId = request.SpinId,
                 BetAmount = request.BetAmount,
                 BetString = betString,
                 IpAddress = _currentUserService.IpAddress,
