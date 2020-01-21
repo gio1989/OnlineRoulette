@@ -2,11 +2,10 @@
 using OnlineRoulette.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace OnlineRoulette.Domain.ValueObjects
 {
-   public class AdAccount : ValueObject
+    public class AdAccount : ValueObject
     {
         private AdAccount()
         {

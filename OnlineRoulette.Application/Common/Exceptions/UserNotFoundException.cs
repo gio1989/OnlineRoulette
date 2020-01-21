@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace  OnlineRoulette.Application.Common.Exceptions
+namespace OnlineRoulette.Application.Common.Exceptions
 {
     public class UserNotFoundException : BaseApiException
     {

@@ -1,6 +1,5 @@
 ﻿using OnlineRoulette.Domain.Common;
 using OnlineRoulette.Domain.Enums;
-using System;
 
 namespace OnlineRoulette.Domain.Entities
 {

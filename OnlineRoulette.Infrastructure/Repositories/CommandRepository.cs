@@ -184,7 +184,6 @@ namespace OnlineRoulette.Infrastructure.Repositories
             });
         }
 
-
         #endregion
     }
 }
