@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineRoulette.Application\OnlineRoulette.Application.csproj" />
-    <ProjectReference Include="..\OnlineRoulette.Domain\OnlineRoulette.Domain.csproj" />
   </ItemGroup>
 
 </Project>
