@@ -33,8 +33,11 @@ namespace OnlineRoulette.Api.Controllers
         [HttpPost("makeBet")]
         public async Task<ActionResult<BetDto>> MakeBet(MakeBetCommand command)
         {
+            var responce = await Mediator.Send(command);
+
             await _hubContext.Clients.All.SendAsync("jackpotAmountChanged", $"Jackpot amount has increased: {await Mediator.Send(new JackpotQuery())}");
-            return await Mediator.Send(command);
+
+            return responce;
         }
 
         /// <summary>
