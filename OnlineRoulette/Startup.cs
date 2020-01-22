@@ -49,8 +49,6 @@ namespace OnlineRoulette
 
             var token = Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
-            var secret = Encoding.ASCII.GetBytes(token.Secret);
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
             services.AddAuthentication(x =>
        {
