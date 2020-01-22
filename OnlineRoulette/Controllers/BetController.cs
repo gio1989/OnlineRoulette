@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OnlineRoulette.Api.SignalrHubs;
@@ -45,6 +46,16 @@ namespace OnlineRoulette.Api.Controllers
         [HttpPost("createSpin")]
         public async Task<ActionResult<long>> CreateSpin()
             => await Mediator.Send(new CreateSpinCommand());
+
+        /// <summary>
+        /// Change spin status for ex: Closed, failed and etc..
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("changeSpinStatus")]
+        public async Task<ActionResult<Unit>> ChangeSpinStatus(SpinStatusChangeCommand command)
+            => await Mediator.Send(command);
 
         #endregion
 

@@ -102,8 +102,6 @@ namespace OnlineRoulette.Application.AuthManager
         /// <returns></returns>
         public string GenerateToken(int userId)
         {
-
-            // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor

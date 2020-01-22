@@ -9,8 +9,6 @@ namespace OnlineRoulette.Api.Controllers
     [ApiController]
     public abstract class ApiController : ControllerBase
     {
-        protected readonly IHttpContextAccessor _httpContextAccessor;
-
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 

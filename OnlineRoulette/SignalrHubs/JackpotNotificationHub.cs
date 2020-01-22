@@ -6,8 +6,6 @@ namespace OnlineRoulette.Api.SignalrHubs
     public class JackpotNotificationHub : Hub
     {
         public async Task SendJackpotChangedNotification(string message)
-        {
-            await Clients.All.SendAsync("jackpotAmountChanged", message);
-        }
+            => await Clients.All.SendAsync("jackpotAmountChanged", message);
     }
 }
