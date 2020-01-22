@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineRoulette.Api.Controllers;
+using OnlineRoulette.Application.Common.Dtos;
 using OnlineRoulette.Application.Queries;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace OnlineRoulette.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<string>> LogIn(LoginQuery query)
+        public async Task<ActionResult<UserDto>> LogIn(LoginQuery query)
            => await Mediator.Send(query);
 
         /// <summary>

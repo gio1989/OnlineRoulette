@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using OnlineRoulette.Application.AuthManager;
+using OnlineRoulette.Application.Common.Dtos;
 using OnlineRoulette.Application.Common.Exceptions;
 using OnlineRoulette.Application.Common.Interfaces;
 using OnlineRoulette.Application.Queries;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OnlineRoulette.Application.QueryHandlers
 {
-    public class QueryHandler : IRequestHandler<LoginQuery, string>,
+    public class QueryHandler : IRequestHandler<LoginQuery, UserDto>,
                                 IRequestHandler<JackpotQuery, decimal>,
                                 IRequestHandler<BetHistoryQuery, PagedData<BetEntity>>,
                                 IRequestHandler<UserBalanceQurey, decimal?>
@@ -18,15 +20,18 @@ namespace OnlineRoulette.Application.QueryHandlers
         private readonly IQueryRepository _queryRepository;
         private readonly IAuthManager _authManager;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
 
-        public QueryHandler(IQueryRepository queryRepository, IAuthManager authManager, ICurrentUserService currentUserService)
+
+        public QueryHandler(IQueryRepository queryRepository, IAuthManager authManager, ICurrentUserService currentUserService, IMapper mapper)
         {
             _queryRepository = queryRepository;
             _authManager = authManager;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
-        public async Task<string> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(request.Email) || !_authManager.IsEmailValid(request.Email))
                 throw new EmailNotValidException();
@@ -39,7 +44,11 @@ namespace OnlineRoulette.Application.QueryHandlers
             if (user.Password != password)
                 throw new UserNotFoundException();
 
-            return _authManager.GenerateToken(user.Id);
+            var userInfo = _mapper.Map<UserDto>(user);
+
+            userInfo.Token = _authManager.GenerateToken(user.Id);
+
+            return userInfo;
         }
 
         public async Task<decimal> Handle(JackpotQuery request, CancellationToken cancellationToken)

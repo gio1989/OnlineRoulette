@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OnlineRoulette.Application.Common.Dtos;
 
 namespace OnlineRoulette.Application.Queries
 {
@@ -6,7 +7,7 @@ namespace OnlineRoulette.Application.Queries
     /// <summary>
     /// LogIn user 
     /// </summary>
-    public class LoginQuery : IRequest<string>
+    public class LoginQuery : IRequest<UserDto>
     {
         /// <summary>
         /// Email
